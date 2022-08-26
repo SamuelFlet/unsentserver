@@ -27,8 +27,19 @@ type Post {
   title: String!
 }
 
+input PostOrderByInput {
+  content: Sort
+  createdAt: Sort
+  title: Sort
+}
+
 type Query {
-  feed: [Post!]!
+  feed(filter: String, orderBy: [PostOrderByInput!], skip: Int, take: Int): [Post!]!
+}
+
+enum Sort {
+  asc
+  desc
 }
 
 type User {

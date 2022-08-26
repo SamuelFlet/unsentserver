@@ -1,4 +1,15 @@
-import { extendType, nonNull, objectType, stringArg, booleanArg } from "nexus";
+import {
+  extendType,
+  nonNull,
+  objectType,
+  stringArg,
+  booleanArg,
+  intArg,
+  inputObjectType,
+  enumType,
+  arg,
+  list
+} from "nexus";
 import { NexusGenObjects } from "../../nexus-typegen";
 import { Prisma } from "@prisma/client";
 
@@ -27,11 +38,44 @@ export const PostQuery = extendType({
   definition(t) {
     t.nonNull.list.nonNull.field("feed", {
       type: "Post",
+      args: {
+        filter: stringArg(),
+        skip: intArg(),
+        take: intArg(),
+        orderBy: arg({ type: list(nonNull(PostOrderByInput)) }),
+      },
       resolve(parent, args, context) {
-        return context.prisma.post.findMany();
+        const where = args.filter
+          ? {
+              OR: [
+                { title: { contains: args.filter } },
+                { content: { contains: args.filter } },
+              ],
+            }
+          : {};
+        return context.prisma.post.findMany({
+          where,
+          skip: args?.skip as number | undefined,
+          take: args?.take as number | undefined,
+          orderBy: args?.orderBy as Prisma.Enumerable<Prisma.PostOrderByWithRelationInput> | undefined,
+        });
       },
     });
   },
+});
+
+export const PostOrderByInput = inputObjectType({
+  name: "PostOrderByInput",
+  definition(t) {
+      t.field("title", { type: Sort });
+      t.field("content", { type: Sort });
+      t.field("createdAt", { type: Sort });
+  },
+});
+
+export const Sort = enumType({
+  name: "Sort",
+  members: ["asc", "desc"],
 });
 
 export const PostMutation = extendType({
