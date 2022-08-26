@@ -12,6 +12,12 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type Feed {
+  count: Int!
+  id: ID
+  posts: [Post!]!
+}
+
 type Mutation {
   login(email: String!, password: String!): AuthPayload!
   newPost(content: String!, published: Boolean!, title: String!): Post!
@@ -34,7 +40,7 @@ input PostOrderByInput {
 }
 
 type Query {
-  feed(filter: String, orderBy: [PostOrderByInput!], skip: Int, take: Int): [Post!]!
+  feed(filter: String, orderBy: [PostOrderByInput!], skip: Int, take: Int): Feed!
 }
 
 enum Sort {

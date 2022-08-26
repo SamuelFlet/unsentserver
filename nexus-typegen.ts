@@ -54,6 +54,11 @@ export interface NexusGenObjects {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Feed: { // root type
+    count: number; // Int!
+    id?: string | null; // ID
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+  }
   Mutation: {};
   Post: { // root type
     content: string; // String!
@@ -85,6 +90,11 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Feed: { // field return type
+    count: number; // Int!
+    id: string | null; // ID
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+  }
   Mutation: { // field return type
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     newPost: NexusGenRootTypes['Post']; // Post!
@@ -99,7 +109,7 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Query: { // field return type
-    feed: NexusGenRootTypes['Post'][]; // [Post!]!
+    feed: NexusGenRootTypes['Feed']; // Feed!
   }
   User: { // field return type
     email: string; // String!
@@ -113,6 +123,11 @@ export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
     token: 'String'
     user: 'User'
+  }
+  Feed: { // field return type name
+    count: 'Int'
+    id: 'ID'
+    posts: 'Post'
   }
   Mutation: { // field return type name
     login: 'AuthPayload'
@@ -128,7 +143,7 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
   }
   Query: { // field return type name
-    feed: 'Post'
+    feed: 'Feed'
   }
   User: { // field return type name
     email: 'String'

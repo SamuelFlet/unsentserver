@@ -8,7 +8,7 @@ import {
   inputObjectType,
   enumType,
   arg,
-  list
+  list,
 } from "nexus";
 import { NexusGenObjects } from "../../nexus-typegen";
 import { Prisma } from "@prisma/client";
@@ -33,18 +33,27 @@ export const Post = objectType({
   },
 });
 
+export const Feed = objectType({
+  name: "Feed",
+  definition(t) {
+    t.nonNull.list.nonNull.field("posts", { type: Post });
+    t.nonNull.int("count");
+    t.id("id");
+  },
+});
+
 export const PostQuery = extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field("feed", {
-      type: "Post",
+    t.nonNull.field("feed", {
+      type: "Feed",
       args: {
         filter: stringArg(),
         skip: intArg(),
         take: intArg(),
         orderBy: arg({ type: list(nonNull(PostOrderByInput)) }),
       },
-      resolve(parent, args, context) {
+      async resolve(parent, args, context) {
         const where = args.filter
           ? {
               OR: [
@@ -53,12 +62,24 @@ export const PostQuery = extendType({
               ],
             }
           : {};
-        return context.prisma.post.findMany({
+        const posts = await context.prisma.post.findMany({
           where,
           skip: args?.skip as number | undefined,
           take: args?.take as number | undefined,
-          orderBy: args?.orderBy as Prisma.Enumerable<Prisma.PostOrderByWithRelationInput> | undefined,
+          orderBy: args?.orderBy as
+            | Prisma.Enumerable<Prisma.PostOrderByWithRelationInput>
+            | undefined,
         });
+
+        const count = await context.prisma.post.count({ where }); // 2
+        const id = `main-feed:${JSON.stringify(args)}`; // 3
+
+        return {
+          // 4
+          posts,
+          count,
+          id,
+        };
       },
     });
   },
@@ -67,9 +88,9 @@ export const PostQuery = extendType({
 export const PostOrderByInput = inputObjectType({
   name: "PostOrderByInput",
   definition(t) {
-      t.field("title", { type: Sort });
-      t.field("content", { type: Sort });
-      t.field("createdAt", { type: Sort });
+    t.field("title", { type: Sort });
+    t.field("content", { type: Sort });
+    t.field("createdAt", { type: Sort });
   },
 });
 
