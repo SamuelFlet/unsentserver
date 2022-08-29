@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server-lambda";
+import { ApolloServer } from "apollo-server";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 
 import { schema } from "./schema";
@@ -13,4 +13,6 @@ export const server = new ApolloServer({
 
 const port = process.env.PORT || 3000;
 
-exports.handler = server.createHandler();
+server.listen({ port }).then(({ url }) => {
+    console.log(`🚀  Server  ready at ${url}`);
+});
