@@ -6,6 +6,9 @@ const server = new ApolloServer({
   schema,
   context,
   introspection: true,
+  csrfPrevention: true,
+
+  cache: 'bounded',
 });
 
 exports.graphqlHandler = server.createHandler();

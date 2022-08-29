@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
+    "@types/lru-cache": "^7.10.10",
     "apollo-server": "^3.10.2",
     "apollo-server-azure-functions": "^3.10.2",
     "bcryptjs": "^2.4.3",
