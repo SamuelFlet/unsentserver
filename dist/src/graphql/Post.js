@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostMutation = exports.Sort = exports.PostOrderByInput = exports.PostQuery = exports.Feed = exports.Post = void 0;
+exports.PostMutation = exports.Sort = exports.PostOrderByInput = exports.SinglePost = exports.PostQuery = exports.Feed = exports.Post = void 0;
 const nexus_1 = require("nexus");
 exports.Post = (0, nexus_1.objectType)({
     name: "Post",
@@ -73,6 +73,32 @@ exports.PostQuery = (0, nexus_1.extendType)({
                         count,
                         id,
                     };
+                });
+            },
+        });
+    },
+});
+exports.SinglePost = (0, nexus_1.extendType)({
+    type: "Query",
+    definition(t) {
+        t.nonNull.field("singlePost", {
+            type: "Post",
+            args: {
+                postID: (0, nexus_1.stringArg)(),
+            },
+            resolve(parent, args, context) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    const where = args.postID
+                        ? {
+                            OR: [
+                                { id: { contains: args.postID } },
+                            ],
+                        }
+                        : {};
+                    const post = yield context.prisma.post.findFirstOrThrow({
+                        where
+                    });
+                    return post;
                 });
             },
         });

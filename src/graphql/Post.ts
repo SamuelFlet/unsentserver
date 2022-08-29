@@ -10,7 +10,6 @@ import {
   arg,
   list,
 } from "nexus";
-import { NexusGenObjects } from "../../nexus-typegen";
 import { Prisma } from "@prisma/client";
 
 export const Post = objectType({
@@ -85,20 +84,27 @@ export const PostQuery = extendType({
   },
 });
 
-export const singlePost = extendType({
+export const SinglePost = extendType({
   type: "Query",
   definition(t) {
-    t.field("singlePost", {
+    t.nonNull.field("singlePost", {
       type: "Post",
       args: {
-        postID: nonNull(stringArg()),
+        postID: stringArg(),
       },
       async resolve(parent, args, context) {
-        const { postID } = args;
-        const post = await context.prisma.post.findFirst({
-          where: { id: postID },
+        const where = args.postID
+          ? {
+              OR: [
+                { id: { contains: args.postID } },
+              ],
+            }
+          : {};
+        const post = await context.prisma.post.findFirstOrThrow({
+          where
         });
-        return post;
+
+        return post
       },
     });
   },
