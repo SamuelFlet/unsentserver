@@ -35,8 +35,7 @@ function startApolloServer() {
         });
         yield server.start();
         server.applyMiddleware({ app });
-        yield new Promise((resolve) => httpServer.listen({ port: 8081 }, resolve));
-        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+        yield new Promise((resolve) => httpServer.listen({ port: process.env.PORT || 8081 }, resolve));
     });
 }
 startApolloServer();
