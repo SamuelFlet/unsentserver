@@ -1,19 +1,26 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
-
+import express from "express";
 import { schema } from "./schema";
 import { context } from "./context";
+import http from "http";
 
-export const server = new ApolloServer({
-  schema,
-  context,
-  introspection: true,
-  plugins: [ApolloServerPluginLandingPageLocalDefault()],
-});
+async function startApolloServer() {
+  const app = express();
+  const httpServer = http.createServer(app);
+  const server = new ApolloServer({
+    schema,
+    context,
+    introspection: true,
+    plugins: [ApolloServerPluginLandingPageLocalDefault()],
+  });
+  await server.start();
+  server.applyMiddleware({ app });
 
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-  console.log(`
-    🚀  Server is ready at ${url}
-    📭  Query at https://studio.apollographql.com/dev
-  `);
-});
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 4000 }, resolve)
+  );
+
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+}
+startApolloServer();
