@@ -41,6 +41,7 @@ input PostOrderByInput {
 
 type Query {
   feed(filter: String, orderBy: [PostOrderByInput!], skip: Int, take: Int): Feed!
+  singlePost(postID: String!): Post
 }
 
 enum Sort {

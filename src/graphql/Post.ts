@@ -85,6 +85,25 @@ export const PostQuery = extendType({
   },
 });
 
+export const singlePost = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("singlePost", {
+      type: "Post",
+      args: {
+        postID: nonNull(stringArg()),
+      },
+      async resolve(parent, args, context) {
+        const { postID } = args;
+        const post = await context.prisma.post.findFirst({
+          where: { id: postID },
+        });
+        return post;
+      },
+    });
+  },
+});
+
 export const PostOrderByInput = inputObjectType({
   name: "PostOrderByInput",
   definition(t) {

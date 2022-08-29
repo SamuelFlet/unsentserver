@@ -110,6 +110,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     feed: NexusGenRootTypes['Feed']; // Feed!
+    singlePost: NexusGenRootTypes['Post'] | null; // Post
   }
   User: { // field return type
     email: string; // String!
@@ -144,6 +145,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     feed: 'Feed'
+    singlePost: 'Post'
   }
   User: { // field return type name
     email: 'String'
@@ -176,6 +178,9 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['PostOrderByInput'][] | null; // [PostOrderByInput!]
       skip?: number | null; // Int
       take?: number | null; // Int
+    }
+    singlePost: { // args
+      postID: string; // String!
     }
   }
 }
