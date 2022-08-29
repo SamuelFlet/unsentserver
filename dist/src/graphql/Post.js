@@ -145,3 +145,4 @@ exports.PostMutation = (0, nexus_1.extendType)({
         });
     },
 });
+//# sourceMappingURL=Post.js.map

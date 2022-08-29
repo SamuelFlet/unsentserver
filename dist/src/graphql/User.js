@@ -18,3 +18,4 @@ exports.User = (0, nexus_1.objectType)({
         });
     },
 });
+//# sourceMappingURL=User.js.map

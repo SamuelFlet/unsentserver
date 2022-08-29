@@ -4,3 +4,4 @@
  * Do not make changes to this file directly
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=nexus-typegen.js.map

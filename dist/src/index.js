@@ -11,3 +11,4 @@ const server = new apollo_server_azure_functions_1.ApolloServer({
     plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageLocalDefault)()],
 });
 exports.graphqlHandler = server.createHandler();
+//# sourceMappingURL=index.js.map
