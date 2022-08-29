@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/d5ab55e5-cc22-4211-8504-cefca4e1582e/microsoft.web/sites/subscriptions/d5ab55e5-cc22-4211-8504-cefca4e1582e/resourceGroups/gqlproject-rg/providers/Microsoft.Web/sites/gqlproject",
-    "appService.deploySubpath": "."
-}
