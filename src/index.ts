@@ -31,6 +31,10 @@ async function startApolloServer() {
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: process.env.PORT || 8081 }, resolve)
   );
+  
+  app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
 }
 
 startApolloServer();
