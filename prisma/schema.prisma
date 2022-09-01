@@ -16,6 +16,7 @@ model Post {
   title      String
   content    String
   published  Boolean
+  img      String
   postedBy   User?    @relation(name: "foobar", fields: [postedById], references: [id])
   postedById Int?
 }

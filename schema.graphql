@@ -20,7 +20,7 @@ type Feed {
 
 type Mutation {
   login(email: String!, password: String!): AuthPayload!
-  newPost(content: String!, published: Boolean!, title: String!): Post!
+  newPost(content: String!, img: String, published: Boolean!, title: String!): Post!
   signup(email: String!, name: String!, password: String!): AuthPayload!
 }
 
@@ -28,6 +28,7 @@ type Post {
   content: String!
   createdAt: DateTime!
   id: String!
+  img: String!
   postedBy: User
   published: Boolean!
   title: String!

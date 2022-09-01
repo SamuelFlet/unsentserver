@@ -64,6 +64,7 @@ export interface NexusGenObjects {
     content: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    img: string; // String!
     published: boolean; // Boolean!
     title: string; // String!
   }
@@ -104,6 +105,7 @@ export interface NexusGenFieldTypes {
     content: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    img: string; // String!
     postedBy: NexusGenRootTypes['User'] | null; // User
     published: boolean; // Boolean!
     title: string; // String!
@@ -139,6 +141,7 @@ export interface NexusGenFieldTypeNames {
     content: 'String'
     createdAt: 'DateTime'
     id: 'String'
+    img: 'String'
     postedBy: 'User'
     published: 'Boolean'
     title: 'String'
@@ -163,6 +166,7 @@ export interface NexusGenArgTypes {
     }
     newPost: { // args
       content: string; // String!
+      img?: string | null; // String
       published: boolean; // Boolean!
       title: string; // String!
     }

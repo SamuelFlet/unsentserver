@@ -18,6 +18,7 @@ exports.Post = (0, nexus_1.objectType)({
         t.nonNull.string("id");
         t.nonNull.string("content");
         t.nonNull.boolean("published");
+        t.nonNull.string("img");
         //@ts-ignore
         t.nonNull.dateTime("createdAt"); // I genuinely have no idea why this is resulting in an error but whatever
         t.field("postedBy", {
@@ -90,13 +91,11 @@ exports.SinglePost = (0, nexus_1.extendType)({
                 return __awaiter(this, void 0, void 0, function* () {
                     const where = args.postID
                         ? {
-                            OR: [
-                                { id: { contains: args.postID } },
-                            ],
+                            OR: [{ id: { contains: args.postID } }],
                         }
                         : {};
                     const post = yield context.prisma.post.findFirstOrThrow({
-                        where
+                        where,
                     });
                     return post;
                 });
@@ -122,18 +121,20 @@ exports.PostMutation = (0, nexus_1.extendType)({
         t.nonNull.field("newPost", {
             type: "Post",
             args: {
+                img: (0, nexus_1.stringArg)(),
                 title: (0, nexus_1.nonNull)((0, nexus_1.stringArg)()),
                 content: (0, nexus_1.nonNull)((0, nexus_1.stringArg)()),
                 published: (0, nexus_1.nonNull)((0, nexus_1.booleanArg)()),
             },
             resolve(parent, args, context) {
-                const { title, content, published } = args;
+                const { img, title, content, published } = args;
                 const { userId } = context;
                 if (!userId) {
                     throw new Error("Cannot post without logging in.");
                 }
                 const newPost = context.prisma.post.create({
                     data: {
+                        img,
                         title,
                         content,
                         published,

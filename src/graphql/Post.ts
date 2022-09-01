@@ -19,6 +19,7 @@ export const Post = objectType({
     t.nonNull.string("id");
     t.nonNull.string("content");
     t.nonNull.boolean("published");
+    t.nonNull.string("img");
     //@ts-ignore
     t.nonNull.dateTime("createdAt"); // I genuinely have no idea why this is resulting in an error but whatever
     t.field("postedBy", {
@@ -95,16 +96,14 @@ export const SinglePost = extendType({
       async resolve(parent, args, context) {
         const where = args.postID
           ? {
-              OR: [
-                { id: { contains: args.postID } },
-              ],
+              OR: [{ id: { contains: args.postID } }],
             }
           : {};
         const post = await context.prisma.post.findFirstOrThrow({
-          where
+          where,
         });
 
-        return post
+        return post;
       },
     });
   },
@@ -130,12 +129,13 @@ export const PostMutation = extendType({
     t.nonNull.field("newPost", {
       type: "Post",
       args: {
+        img: stringArg(),
         title: nonNull(stringArg()),
         content: nonNull(stringArg()),
         published: nonNull(booleanArg()),
       },
       resolve(parent, args, context) {
-        const { title, content, published } = args;
+        const { img,title, content, published } = args;
         const { userId } = context;
 
         if (!userId) {
@@ -144,6 +144,7 @@ export const PostMutation = extendType({
 
         const newPost = context.prisma.post.create({
           data: {
+            img,
             title,
             content,
             published,
