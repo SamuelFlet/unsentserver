@@ -30,7 +30,7 @@ async function startApolloServer() {
 
   app.get("*", (req, res) => {
     res.send(
-      `<a href=http://helloexpress-env.eba-ip82vmkx.us-east-1.elasticbeanstalk.com/graphql>GO TO HERE</a>`
+      `<a href=https://data.unsentletters.click/graphql>GO TO HERE</a>`
     );
   });
 
