@@ -112,6 +112,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     feed: NexusGenRootTypes['Feed']; // Feed!
+    signout: boolean | null; // Boolean
     singlePost: NexusGenRootTypes['Post']; // Post!
   }
   User: { // field return type
@@ -148,6 +149,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     feed: 'Feed'
+    signout: 'Boolean'
     singlePost: 'Post'
   }
   User: { // field return type name

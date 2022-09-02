@@ -109,6 +109,19 @@ export const SinglePost = extendType({
   },
 });
 
+export const SignOut = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("signout", {
+      
+      type: "Boolean",
+      resolve: () => {
+        return true;
+      },
+    });
+  },
+});
+
 export const PostOrderByInput = inputObjectType({
   name: "PostOrderByInput",
   definition(t) {
@@ -135,7 +148,7 @@ export const PostMutation = extendType({
         published: nonNull(booleanArg()),
       },
       resolve(parent, args, context) {
-        const { img,title, content, published } = args;
+        const { img, title, content, published } = args;
         const { userId } = context;
 
         if (!userId) {

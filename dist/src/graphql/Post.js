@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostMutation = exports.Sort = exports.PostOrderByInput = exports.SinglePost = exports.PostQuery = exports.Feed = exports.Post = void 0;
+exports.PostMutation = exports.Sort = exports.PostOrderByInput = exports.SignOut = exports.SinglePost = exports.PostQuery = exports.Feed = exports.Post = void 0;
 const nexus_1 = require("nexus");
 exports.Post = (0, nexus_1.objectType)({
     name: "Post",
@@ -99,6 +99,17 @@ exports.SinglePost = (0, nexus_1.extendType)({
                     });
                     return post;
                 });
+            },
+        });
+    },
+});
+exports.SignOut = (0, nexus_1.extendType)({
+    type: "Query",
+    definition(t) {
+        t.field("signout", {
+            type: "Boolean",
+            resolve: () => {
+                return true;
             },
         });
     },

@@ -1,4 +1,4 @@
-import { objectType } from "nexus";
+import { objectType, extendType } from "nexus";
 
 export const User = objectType({
   name: "User",
@@ -16,3 +16,4 @@ export const User = objectType({
     });
   },
 });
+
