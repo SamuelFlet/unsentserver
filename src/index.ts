@@ -2,6 +2,7 @@ import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
 import express from "express";
 
@@ -20,7 +21,7 @@ async function startApolloServer() {
     cache: "bounded",
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
-      ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+      ApolloServerPluginLandingPageProductionDefault({ embed: true, graphRef: 'My-Graph-3u7yzi@current' }),
     ],
   });
   await server.start();
@@ -28,9 +29,7 @@ async function startApolloServer() {
   server.applyMiddleware({ app });
 
   app.get("*", (req, res) => {
-    res.send(
-      `<a href=https://data.unsentletters.click/graphql>GO TO HERE</a>`
-    );
+    res.send(`<a href=https://data.unsentletters.click/graphql>GO TO HERE</a>`);
   });
 
   await new Promise<void>((resolve) =>

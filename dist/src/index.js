@@ -30,7 +30,7 @@ function startApolloServer() {
             cache: "bounded",
             plugins: [
                 (0, apollo_server_core_1.ApolloServerPluginDrainHttpServer)({ httpServer }),
-                (0, apollo_server_core_1.ApolloServerPluginLandingPageLocalDefault)({ embed: true }),
+                (0, apollo_server_core_1.ApolloServerPluginLandingPageProductionDefault)({ embed: true, graphRef: 'My-Graph-3u7yzi@current' }),
             ],
         });
         yield server.start();
