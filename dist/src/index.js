@@ -36,7 +36,7 @@ function startApolloServer() {
         yield server.start();
         server.applyMiddleware({ app });
         app.get("*", (req, res) => {
-            res.send(`<a href=http://helloexpress-env.eba-ip82vmkx.us-east-1.elasticbeanstalk.com/graphql>GO TO HERE</a>`);
+            res.send(`<a href=https://data.unsentletters.click/graphql>GO TO HERE</a>`);
         });
         yield new Promise((resolve) => httpServer.listen({ port: process.env.PORT || 8081 }, resolve));
     });

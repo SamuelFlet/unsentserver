@@ -1,5 +1,4 @@
 import { ApolloServer } from "apollo-server-express";
-
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
