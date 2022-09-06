@@ -42,6 +42,7 @@ input PostOrderByInput {
 
 type Query {
   feed(filter: String, orderBy: [PostOrderByInput!], skip: Int, take: Int): Feed!
+  randomPost: Post!
   signout: Boolean
   singlePost(postID: String): Post!
 }

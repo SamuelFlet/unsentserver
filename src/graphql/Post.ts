@@ -11,6 +11,7 @@ import {
   list,
 } from "nexus";
 import { Prisma } from "@prisma/client";
+import { resolve } from "path";
 
 export const Post = objectType({
   name: "Post",
@@ -109,11 +110,30 @@ export const SinglePost = extendType({
   },
 });
 
+export const RandomPost = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.field("randomPost", {
+      type: "Post",
+      async resolve(parent, args, context) {
+        const productsCount = await context.prisma.post.count();
+        const skip = Math.floor(Math.random() * productsCount);
+        const post = await context.prisma.post.findFirst({
+          skip: skip,
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+        return post;
+      },
+    });
+  },
+});
+
 export const SignOut = extendType({
   type: "Query",
   definition(t) {
     t.field("signout", {
-      
       type: "Boolean",
       resolve: () => {
         return true;
